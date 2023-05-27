@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        *{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    box-sizing: border-box;
+}
+body{
+    background-color: rgb(107, 96, 64);
+}
+#main{
+    background-image: linear-gradient(120deg,rgb(20, 107, 207),rgb(44, 44, 94));
+    margin: auto;
+    width: 100%;
+    max-width: auto;
+    min-width: auto;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    color: #f8f7f7;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#search{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+#search input{
+    width: auto;
+    height: 40px;
+    font-size: 25px;
+    text-align: center;
+    margin: 15px;
+    border-radius: 20px;
+    border-style: none;
+}
+#search button{
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    border-style: none;
+    margin: 15px;
+    cursor: pointer;
+}
+#search button img{
+    width:15px;
+}
+#dl{
+    background-color: rgba(141, 142, 145, 0.637);
+    color: aliceblue;
+    font-size: 20px;
+    padding: 5px;
+    border-style: none;
+    border-radius: 10px;
+    margin: 10px;
+    cursor: pointer;
+}
+#city{
+    font-size: 50px;
+    margin: 20px;
+}
+#weather{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+#top{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    flex-direction:column;
+}
+#current{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 10px;
+    margin-top: 30px;
+    background-color:grey;
+    border-radius: 20px;
+    width: 50%;
+}
+#current:hover {
+			      transform: scale(1.05);
+			      box-shadow: 10px 10px 20px 0px black;
+		    }
+#dt{
+    margin: 10px;
+}
+#details{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.temp,.humid,.wind{
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+.temp p,.humid p,.wind p{
+    font-family: cursive;
+}
+#current img{
+    width: 150px;
+    height: 150px;
+}
+#desc{
+    margin-bottom: 20px;
+    font-size: 30px;
+}
+#err{
+    display: none;
+    font-size: 30px;
+    text-align: center;
+    font-family: cursive;
+    border-radius: 10px;
+    background-color: grey;
+    margin-top: 30px;
+    padding: 30px;
+}
+
+#weather{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#future{
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: grey;
+    border-radius: 20px;
+}
+#future .d{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    margin: 50px;
+   background-image: linear-gradient(120deg,rgb(90, 21, 99),rgb(26, 79, 139));
+    border-radius: 30px;
+}
+#future .d:hover {
+			      transform: scale(1.15);
+			      box-shadow: 10px 10px 20px 0px black;
+		    }
+.d img{
+   width: 120px;
+}
+.tempi,.humidi,.windi{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.tempi img,.tempi div{
+    margin-left: 20px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.humidi div,.humidi img{
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.humidi div{
+    margin-left: 25px;
+}
+.windi div,.windi img{
+    margin-left: 33px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.windi div{
+    margin-left: 25px;
+}
+#wchange{
+    display: flex;
+    margin-top: 30px;
+    margin-left: 20px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: grey;
+    padding: 20px;
+    border-radius: 30px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 25px;
+    min-width: auto;
+}
+#weatherChart{
+    width: auto;
+    min-width: auto;
+    height: 200px;
+    max-height: auto;
+    background-image: linear-gradient(130deg,cyan,rgb(149, 172, 206),rgb(130, 197, 130));
+    border-radius: 20px;
+    margin: 20px;
+    margin-left: 30px;
+    margin-top: 10px;
+}
+#wchange:hover {
+			      transform: scale(1.05);
+			      box-shadow: 10px 10px 20px 0px black;
+		    }
+#city,#weather,#wchange{
+    display: none;
+}
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div id="main">
+        <div id="user">
+        <div id="search">
+            <input type="text" placeholder="enter city name" id="cityname">
+            <button id="btn"><img src="https://cdn2.iconfinder.com/data/icons/user-interface-169/32/search-256.png"></button>
+        </div>
+        <h2>or</h2>
+        <div id="devloc">
+            <button id="dl" onclick="getloc()">get device location</button>
+        </div>
+    </div>
+        <div id="err">invalid city name</div>
+        <div id="weather">
+            <div id="top">
+            <div id="city">
+            </div>
+            <div id="current">
+                    <div id="dt"></div>
+                <img src="https://cdn4.iconfinder.com/data/icons/the-weather-is-nice-today/64/weather_2-256.png" id="image">
+                <div id="desc"></div>
+                <div id="details">
+                <div class="temp"><img src="https://cdn3.iconfinder.com/data/icons/font-awesome-solid/512/temperature-high-256.png" style="height:40px;width:40px"><p>Temperature:</p><div id="temp"></div></div>
+                <div class="humid"><img src="https://cdn0.iconfinder.com/data/icons/weather-939/128/Weather21-256.png" style="height:40px;width:40px"><p>Humidity:</p><div id="humid"></div></div>
+                <div class="wind"><img src="https://cdn-icons-png.flaticon.com/512/54/54298.png" style="height:40px;width:40px"><p>wind speed:</p><div id="wind"></div></div>
+            </div>
+            </div>
+            </div>
+            <div id="future">
+                <div id="d0" class="d">
+                    <div id="date1"></div>
+                    <img src="https://cdn4.iconfinder.com/data/icons/the-weather-is-nice-today/64/weather_2-256.png" id="image0">
+                    <div id="desc0"></div>
+                    <div class="tempi"><img src="https://cdn3.iconfinder.com/data/icons/font-awesome-solid/512/temperature-high-256.png" style="height:30px;width:30px"><div id="temp0"></div></div>
+                <div class="humidi"><img src="https://cdn0.iconfinder.com/data/icons/weather-939/128/Weather21-256.png" style="height:30px;width:30px"><div id="humid0"></div></div>
+                <div class="windi"><img src="https://cdn-icons-png.flaticon.com/512/54/54298.png" style="height:30px;width:30px"><div id="wind0"></div></div>
+                </div>
+                <div id="d1" class="d">
+                    <div id="date2"></div>
+                    <img src="https://cdn4.iconfinder.com/data/icons/the-weather-is-nice-today/64/weather_2-256.png" id="image1">
+                    <div id="desc1"></div>
+                    <div class="tempi"><img src="https://cdn3.iconfinder.com/data/icons/font-awesome-solid/512/temperature-high-256.png" style="height:30px;width:30px"><div id="temp1"></div></div>
+                <div class="humidi"><img src="https://cdn0.iconfinder.com/data/icons/weather-939/128/Weather21-256.png" style="height:30px;width:30px"><div id="humid1"></div></div>
+                <div class="windi"><img src="https://cdn-icons-png.flaticon.com/512/54/54298.png" style="height:30px;width:30px"><div id="wind1"></div></div>
+                </div>
+                <div id="d2" class="d">
+                    <div id="date3"></div>
+                    <img src="https://cdn4.iconfinder.com/data/icons/the-weather-is-nice-today/64/weather_2-256.png" id="image2">
+                    <div id="desc2"></div>
+                    <div class="tempi"><img src="https://cdn3.iconfinder.com/data/icons/font-awesome-solid/512/temperature-high-256.png" style="height:30px;width:30px"><div id="temp2">45°C</div></div>
+                <div class="humidi"><img src="https://cdn0.iconfinder.com/data/icons/weather-939/128/Weather21-256.png" style="height:30px;width:30px"><div id="humid2"></div></div>
+                <div class="windi"><img src="https://cdn-icons-png.flaticon.com/512/54/54298.png" style="height:30px;width:30px"><div id="wind2"></div></div>
+                </div>
+                <div id="d3" class="d">
+                    <div id="date4"></div>
+                    <img src="https://cdn4.iconfinder.com/data/icons/the-weather-is-nice-today/64/weather_2-256.png" id="image3">
+                    <div id="desc3"></div>
+                    <div class="tempi"><img src="https://cdn3.iconfinder.com/data/icons/font-awesome-solid/512/temperature-high-256.png" style="height:30px;width:30px"><div id="temp3"></div></div>
+                <div class="humidi"><img src="https://cdn0.iconfinder.com/data/icons/weather-939/128/Weather21-256.png" style="height:30px;width:30px"><div id="humid3"></div></div>
+                <div class="windi"><img src="https://cdn-icons-png.flaticon.com/512/54/54298.png" style="height:30px;width:30px"><div id="wind3"></div></div>
+                </div>
+                <div id="d4" class="d">
+                    <div id="date5"></div>
+                    <img src="https://cdn4.iconfinder.com/data/icons/the-weather-is-nice-today/64/weather_2-256.png" id="image4">
+                    <div id="desc4"></div>
+                    <div class="tempi"><img src="https://cdn3.iconfinder.com/data/icons/font-awesome-solid/512/temperature-high-256.png" style="height:30px;width:30px"><div id="temp4"></div></div>
+                <div class="humidi"><img src="https://cdn0.iconfinder.com/data/icons/weather-939/128/Weather21-256.png" style="height:30px;width:30px"><div id="humid4"></div></div>
+                <div class="windi"><img src="https://cdn-icons-png.flaticon.com/512/54/54298.png" style="height:30px;width:30px"><div id="wind4"></div></div>
+                </div>
+                <div id="d5" class="d">
+                    <div id="date6"></div>
+                    <img src="https://cdn4.iconfinder.com/data/icons/the-weather-is-nice-today/64/weather_2-256.png" id="image5">
+                    <div id="desc5"></div>
+                    <div class="tempi"><img src="https://cdn3.iconfinder.com/data/icons/font-awesome-solid/512/temperature-high-256.png" style="height:30px;width:30px"><div id="temp5"></div></div>
+                <div class="humidi"><img src="https://cdn0.iconfinder.com/data/icons/weather-939/128/Weather21-256.png" style="height:30px;width:30px"><div id="humid5"></div></div>
+                <div class="windi"><img src="https://cdn-icons-png.flaticon.com/512/54/54298.png" style="height:30px;width:30px"><div id="wind5"></div></div>
+                </div>
+                <div id="d6" class="d">
+                    <div id="date7"></div>
+                    <img src="https://cdn4.iconfinder.com/data/icons/the-weather-is-nice-today/64/weather_2-256.png" id="image6">
+                    <div id="desc6"></div>
+                    <div class="tempi"><img src="https://cdn3.iconfinder.com/data/icons/font-awesome-solid/512/temperature-high-256.png" style="height:30px;width:30px"><div id="temp6"></div></div>
+                <div class="humidi"><img src="https://cdn0.iconfinder.com/data/icons/weather-939/128/Weather21-256.png" style="height:30px;width:30px"><div id="humid6"></div></div>
+                <div class="windi"><img src="https://cdn-icons-png.flaticon.com/512/54/54298.png" style="height:30px;width:30px"><div id="wind6"></div></div>
+                </div>
+            </div>
+        </div>
+        <div id="wchange">
+            <div id="text">Weather Changes:</div>
+        <canvas id="weatherChart"></canvas>
+        </div>
+    </div>
+    <script>
+        const apikey="9d2f6ee771ebed6306b40b8be7932c9a";
+        const apiurl="https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+      
+        const searchbox=document.getElementById("cityname");
+        const searchbutton=document.getElementById("btn");
+        const wicon=document.getElementById("image");
+        const day=new Date();
+        var l=0,j=0;
+        var lat,lon;
+        function getloc(){
+            if(navigator.geolocation){
+                navigator.geolocation.getCurrentPosition(getpos);
+            }
+            else{
+                l=1;
+            }
+        }
+                function getpos(position){
+            lon=position.coords.longitude;
+            lat=position.coords.latitude;
+        weather();
+                }
+        async function weather(){
+            let tarray=[],harray=[],warray=[];
+            const au="https://api.openweathermap.org/data/2.5/weather?units=metric";
+            const res=await fetch(au+`&lat=${lat}`+`&lon=${lon}`+`&appid=${apikey}`);
+            document.getElementById("city").style.display="block";
+            document.getElementById("weather").style.display="block";
+            document.getElementById("wchange").style.display="block";
+            document.getElementById("err").style.display="none";
+            data=await res.json();
+            console.log("longitude"+lon+"latitude"+lat);
+            console.log(data);       
+            document.getElementById("desc").innerHTML=data.weather[0].description ;      
+            document.getElementById("city").innerHTML=data.name;
+            document.getElementById("temp").innerHTML=Math.round(data.main.temp)+"°C";
+            document.getElementById("humid").innerHTML=data.main.humidity+"%";
+            document.getElementById("wind").innerHTML=data.wind.speed+"kmph";
+            if(data.weather[0].main=="Clouds")
+            wicon.src="https://cdn4.iconfinder.com/data/icons/the-weather-is-nice-today/64/weather_2-256.png";
+            else if(data.weather[0].main=="Rain")
+            wicon.src="https://cdn0.iconfinder.com/data/icons/weather-filled-outline-6/64/weather_cloud_sun_moon_rain-03-256.png";
+            else if(data.weather[0].main=="Clear")
+            wicon.src="https://cdn2.iconfinder.com/data/icons/weather-color-2/500/weather-01-256.png";
+            else if(data.weather[0].main=="Mist")
+            wicon.src="https://cdn4.iconfinder.com/data/icons/the-weather-is-nice-today/64/weather_39-256.png";
+            else if(data.weather[0].main=="Drizzle")
+            wicon.src="https://cdn2.iconfinder.com/data/icons/weather-flat-14/64/weather07-512.png";
+            else if(data.weather[0].main=="Snow")
+            wicon.src="https://cdn2.iconfinder.com/data/icons/weather-119/512/weather-6-512.png";
+            else if(data.weather[0].main=="Haze")
+            wicon.src="https://cdn1.iconfinder.com/data/icons/weather-471/128/HAZE-256.png";
+            document.getElementById("dt").innerHTML=day;
+            const al="https://api.openweathermap.org/data/2.5/forecast?units=metric";
+            const ak="9d2f6ee771ebed6306b40b8be7932c9a";
+            const resp=await fetch(al+`&lat=${lat}`+`&lon=${lon}`+`&appid=${apikey}`);
+            var wdata;
+            var i=0;
+            wdata=await resp.json();
+            console.log(wdata);
+            for(i=0,k=8;i<7;i++,k=k+5){
+                const tomorrow = () => {
+                let today = new Date();
+                today.setDate(today.getDate() + (i+1));
+                 return today.toISOString().split('T')[0];
+                  };
+                 document.getElementById("date"+(i+1)).innerHTML=tomorrow();
+            var wcon=document.getElementById("image"+i);  
+            document.getElementById("desc"+i).innerHTML=wdata.list[k].weather[0].description ;
+            document.getElementById("temp"+i).innerHTML=Math.round(wdata.list[k].main.temp)+"°C";
+            tarray.push(Math.round(wdata.list[k].main.temp));        
+            document.getElementById("humid"+i).innerHTML=wdata.list[k].main.humidity+"%";
+            harray.push(wdata.list[k].main.humidity);
+            document.getElementById("wind"+i).innerHTML=wdata.list[k].wind.speed+"kmph";
+            warray.push(wdata.list[k].wind.speed);
+            if(wdata.list[k].weather[0].main=="Clouds")
+            wcon.src="https://cdn4.iconfinder.com/data/icons/the-weather-is-nice-today/64/weather_2-256.png";
+            else if(wdata.list[k].weather[0].main=="Rain")
+            wcon.src="https://cdn0.iconfinder.com/data/icons/weather-filled-outline-6/64/weather_cloud_sun_moon_rain-03-256.png";
+            else if(wdata.list[k].weather[0].main=="Clear")
+            wcon.src="https://cdn2.iconfinder.com/data/icons/weather-color-2/500/weather-01-256.png";
+            else if(wdata.list[k].weather[0].main=="Mist")
+            wcon.src="https://cdn4.iconfinder.com/data/icons/the-weather-is-nice-today/64/weather_39-256.png";
+            else if(wdata.list[k].weather[0].main=="Drizzle")
+            wcon.src="https://cdn2.iconfinder.com/data/icons/weather-flat-14/64/weather07-512.png";
+            else if(wdata.list[k].weather[0].main=="Snow")
+            wcon.src="https://cdn2.iconfinder.com/data/icons/weather-119/512/weather-6-512.png";
+            else if(wdata.list[k].weather[0].main=="Haze")
+            wcon.src="https://cdn1.iconfinder.com/data/icons/weather-471/128/HAZE-256.png";
+            }
+            const canvas = document.getElementById("weatherChart");
+    const chart = new Chart(canvas, {
+      type: 'line',
+      data: {
+        labels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6","Day 7"],
+        datasets: [
+          {
+            label: "Temperature (°C)",
+            data: tarray,
+            borderColor: "red",
+            fill: false
+          },
+          {
+            label: "Humidity (%)",
+            data: harray,
+            borderColor: "blue",
+            fill: false
+          },
+          {
+            label: "Wind-Speed (kmph)",
+            data: warray,
+            borderColor: "green",
+            fill: false
+          }
+        ]
+      },
+      options: {
+    responsive: true,
+    maintainAspectRatio:true,
+    scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+    }});
+            j=1;
+        }      
+      async function currentweather(city){
+        let tarray=[],harray=[],warray=[];
+        if(city==""){
+                city="delhi";
+            }
+            const response=await fetch(apiurl+city+`&appid=${apikey}`);
+            if(response.status==404){
+                document.getElementById("err").style.display="block";
+                document.getElementById("city").style.display="none";
+                document.getElementById("weather").style.display="none";
+                document.getElementById("wchange").style.display="none";
+            }
+            else{
+                document.getElementById("city").style.display="block";
+                document.getElementById("weather").style.display="block";
+                document.getElementById("wchange").style.display="block";
+                document.getElementById("err").style.display="none";
+            data=await response.json();
+            console.log(data);
+            document.getElementById("desc").innerHTML=data.weather[0].description;
+            document.getElementById("city").innerHTML=data.name;
+            document.getElementById("temp").innerHTML=Math.round(data.main.temp)+"°C";
+            document.getElementById("humid").innerHTML=data.main.humidity+"%";
+            document.getElementById("wind").innerHTML=data.wind.speed+"kmph";
+            if(data.weather[0].main=="Clouds")
+            wicon.src="https://cdn4.iconfinder.com/data/icons/the-weather-is-nice-today/64/weather_2-256.png";
+            else if(data.weather[0].main=="Rain")
+            wicon.src="https://cdn0.iconfinder.com/data/icons/weather-filled-outline-6/64/weather_cloud_sun_moon_rain-03-256.png";
+            else if(data.weather[0].main=="Clear")
+            wicon.src="https://cdn2.iconfinder.com/data/icons/weather-color-2/500/weather-01-256.png";
+            else if(data.weather[0].main=="Mist")
+            wicon.src="https://cdn4.iconfinder.com/data/icons/the-weather-is-nice-today/64/weather_39-256.png";
+            else if(data.weather[0].main=="Drizzle")
+            wicon.src="https://cdn2.iconfinder.com/data/icons/weather-flat-14/64/weather07-512.png";
+            else if(data.weather[0].main=="Snow")
+            wicon.src="https://cdn2.iconfinder.com/data/icons/weather-119/512/weather-6-512.png";
+            else if(data.weather[0].main=="Haze")
+            wicon.src="https://cdn1.iconfinder.com/data/icons/weather-471/128/HAZE-256.png";
+            document.getElementById("dt").innerHTML=day;
+            const ak="9d2f6ee771ebed6306b40b8be7932c9a";
+            const al="https://api.openweathermap.org/data/2.5/forecast?id=524901&cnt=40&units=metric&q=";
+            var wdata;
+            var i=0;
+            const resp=await fetch(al+city+`&appid=${ak}`);
+            wdata=await resp.json();
+            console.log(wdata);
+            for(i=0,k=8;i<7;i++,k=k+5){
+                const tomorrow = () => {
+                let today = new Date();
+                today.setDate(today.getDate() + (i+1));
+                 return today.toISOString().split('T')[0];
+                  };
+                 document.getElementById("date"+(i+1)).innerHTML=tomorrow();
+            var wcon=document.getElementById("image"+i); 
+            document.getElementById("desc"+i).innerHTML=wdata.list[k].weather[0].description ; 
+            document.getElementById("temp"+i).innerHTML=Math.round(wdata.list[k].main.temp)+"°C";
+            tarray.push(Math.round(wdata.list[k].main.temp));
+            document.getElementById("humid"+i).innerHTML=wdata.list[k].main.humidity+"%";
+            harray.push(wdata.list[k].main.humidity);
+            document.getElementById("wind"+i).innerHTML=wdata.list[k].wind.speed+"kmph";
+            warray.push(wdata.list[k].wind.speed);
+            if(wdata.list[k].weather[0].main=="Clouds")
+            wcon.src="https://cdn4.iconfinder.com/data/icons/the-weather-is-nice-today/64/weather_2-256.png";
+            else if(wdata.list[k].weather[0].main=="Rain")
+            wcon.src="https://cdn0.iconfinder.com/data/icons/weather-filled-outline-6/64/weather_cloud_sun_moon_rain-03-256.png";
+            else if(wdata.list[k].weather[0].main=="Clear")
+            wcon.src="https://cdn2.iconfinder.com/data/icons/weather-color-2/500/weather-01-256.png";
+            else if(wdata.list[k].weather[0].main=="Mist")
+            wcon.src="https://cdn4.iconfinder.com/data/icons/the-weather-is-nice-today/64/weather_39-256.png";
+            else if(wdata.list[k].weather[0].main=="Drizzle")
+            wcon.src="https://cdn2.iconfinder.com/data/icons/weather-flat-14/64/weather07-512.png";
+            else if(wdata.list[k].weather[0].main=="Snow")
+            wcon.src="https://cdn2.iconfinder.com/data/icons/weather-119/512/weather-6-512.png";
+            else if(wdata.list[k].weather[0].main=="Haze")
+            wcon.src="https://cdn1.iconfinder.com/data/icons/weather-471/128/HAZE-256.png";
+            }
+    const canvas = document.getElementById("weatherChart");
+    const chart = new Chart(canvas, {
+      type: 'line',
+      data: {
+        labels: ["Day1", "Day2", "Day3", "Day4", "Day5", "Day6","Day7"],
+        datasets: [
+          {
+            label: "Temperature(°C)",
+            data: tarray,
+            borderColor: "red",
+            fill: false
+          },
+          {
+            label: "Humidity(%)",
+            data: harray,
+            borderColor: "blue",
+            fill: false
+          },
+          {
+            label: "Wind-Speed(kmph)",
+            data: warray,
+            borderColor: "green",
+            fill: false
+          }
+        ]
+      },
+      options: {
+    responsive: true,
+    maintainAspectRatio:true,
+    scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+    }});
+
+        }
+    }
+    if(l==0&&j==0){
+        searchbutton.addEventListener("click",()=>{
+            currentweather(searchbox.value);
+        })}
+function DefaultScreen(){
+document.getElementById("city").defaultValue = "Delhi";
+currentweather("delhi");
+        }
+    </script>
+</body>
+</html>
